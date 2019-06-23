@@ -36,7 +36,7 @@ def extract(fileName):
     for line in file:
 
         # scrub line of anything but letters and spaces
-        line = re.sub(r'[^a-zA-Z ]+', '', line)
+        line = re.sub("[^a-zA-Z]+", '', line)
 
         alltext = alltext + line
             
@@ -61,6 +61,7 @@ def snip(wordList):
         if counter==length:
 
             # write to file in all upper
+            snippet = re.sub(r'[^a-zA-Z ]+', '', snippet)
             file.write(snippet.upper()+"\n")
             counter = 0
             snippet = ""

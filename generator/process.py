@@ -3,9 +3,12 @@
 # perform frequency analysis
 # store (ciphertext, key) pairs
 
+import re
 import csv
 import random
 import string
+import multiprocessing
+import itertools
 
 def main():
     fileName = "snippets.txt"
@@ -18,9 +21,13 @@ def process(fileName):
 
     caewtr = csv.writer(open('caepairs.csv','w'))
     affwtr = csv.writer(open('affpairs.csv','w'))
+    vigwtr = csv.writer(open('vigpairs.csv','w'))
     
     for snip in snippets:
 
+        snip = re.sub("[^a-zA-Z]+", '', snip)
+
+        
         # make caesar pairs
         shift = random.randint(1, 27)
         ciphertext = caesar(snip, shift)
@@ -33,6 +40,17 @@ def process(fileName):
         ciphertext = affine(snip, mult, shift)
         freq = frequency(ciphertext)
         affwtr.writerow([shift, mult, freq])
+
+        # make vegenere cipher
+        length = random.randint(1, 11)
+        key = list()
+        for i in range(length):
+            key.append(random.randint(0, 26))
+        ciphertext = vigenere(snip, key)
+        freq = frequency(ciphertext)
+        vigwtr.writerow([key, freq])
+
+
 
 
 # perform a caesar cipher
@@ -48,19 +66,29 @@ def affine(text, mult, shift):
     alphabet = string.ascii_uppercase
     ciphertext = ""
     for char in text:
-        if char.isalpha():
-            index = ((mult * alphabet.index(char))+shift)%26
-            ciphertext = ciphertext+alphabet[index]
+        index = ((mult * alphabet.index(char))+shift)%26
+        ciphertext = ciphertext+alphabet[index]
+        
     return ciphertext
     
 
+# peform a classic vigenere cipher
+def vigenere(text, key):
+
+    alphabet = string.ascii_uppercase
+    ciphertext = ""
+    for i in range(len(text)):
+        index = (alphabet.index(text[i]) + key[i % len(key)])%26
+        ciphertext = ciphertext + alphabet[index]
+        
+    return ciphertext
 
 # perform frequency analysis
 def frequency(text):
 
     alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     freq = list()
-
+    
     for i in range(26):
         freq.append(text.count(alpha[i]))
 
