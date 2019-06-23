@@ -3,10 +3,8 @@
 # construct 150 word texts
 # compile them in one document
 
-import numpy
 import re
 import glob
-import csv
 
 def main():
     
@@ -57,12 +55,12 @@ def snip(wordList):
     # make 150 word snippets
     for word in wordList:
         
-        snippet = snippet + str(word) + " "
+        snippet = snippet + str(word)
         counter = counter + 1
         if counter==150:
 
-            
-            file.write(snippet)
+            # write to file in all upper
+            file.write(snippet.upper())
             counter = 0
             snippet = ""
             nosnips = nosnips+1
@@ -74,6 +72,4 @@ def snip(wordList):
             
 if __name__ == '__main__':
     main()
-
-extract("abernathy//ch1.txt")
 
