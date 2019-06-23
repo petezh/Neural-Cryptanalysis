@@ -11,7 +11,7 @@ import csv
 def main():
     
     # select folders
-    folders = ["abernathy", "berk", "castro", "fletcher", "kauffman", "rubczenski"]
+    folders = ["abernathy", "berk", "castro", "fletcher", "kauffman", "rubczenski", "eggan", "911report", "govreport"]
     allWords = list()
 
     for folderName in folders:
@@ -52,6 +52,7 @@ def snip(wordList):
 
     snippet = ""
     counter = 0
+    nosnips = 0
 
     # make 150 word snippets
     for word in wordList:
@@ -64,9 +65,10 @@ def snip(wordList):
             file.write(snippet)
             counter = 0
             snippet = ""
+            nosnips = nosnips+1
 
         
-        
+    print("Total Snips: "+str(nosnips))
     file.close()
 
             
