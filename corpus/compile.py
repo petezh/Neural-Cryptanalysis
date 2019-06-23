@@ -60,7 +60,7 @@ def snip(wordList):
         if counter==150:
 
             # write to file in all upper
-            file.write(snippet.upper())
+            file.write(snippet.upper()+"\n")
             counter = 0
             snippet = ""
             nosnips = nosnips+1

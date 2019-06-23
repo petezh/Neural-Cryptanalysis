@@ -16,12 +16,14 @@ def process(fileName):
 
     snippets = open(fileName, 'r')
     
-    output = csv.writer(open('pairs.txt','w'))
+    output = csv.writer(open('pairs.csv','w'))
     
     for snip in snippets:
+        
         shift = random.randint(1, 27)
-        ciphertext = caesar(snip, shift)
 
+        ciphertext = caesar(snip, shift)
+        
         output.writerow([shift, ciphertext])
 
 # perform encryption
