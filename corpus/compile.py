@@ -1,6 +1,6 @@
 # this code will:
 # parse through each collection of papers
-# construct 150 word texts
+# construct snippets of text
 # compile them in one document
 
 import re
@@ -21,7 +21,8 @@ def main():
         for fileName in textFiles:
             allWords = allWords + extract(fileName)
 
-    snip(allWords)    
+    length = 150
+    snip(allWords, length)    
 
 
 # parsing function
@@ -52,12 +53,12 @@ def snip(wordList):
     counter = 0
     nosnips = 0
 
-    # make 150 word snippets
+    # make word snippets
     for word in wordList:
         
         snippet = snippet + str(word)
         counter = counter + 1
-        if counter==150:
+        if counter==length:
 
             # write to file in all upper
             file.write(snippet.upper()+"\n")
