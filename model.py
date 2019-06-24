@@ -13,6 +13,7 @@ with open(train_file_path, 'r') as f:
     names_row = f.readline()
 
 
+
 CSV_COLUMNS = names_row.rstrip('\n').split(',')
 print(CSV_COLUMNS)
 
