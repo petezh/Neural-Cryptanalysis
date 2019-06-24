@@ -20,8 +20,15 @@ def process(fileName):
     snippets = open(fileName, 'r')
 
     caewtr = csv.writer(open('caepairs.csv','w'))
+    caewtr.writerow(['shift'] + [char for char in string.ascii_uppercase])
+
+
     affwtr = csv.writer(open('affpairs.csv','w'))
+    affwtr.writerow(['shift','mult']+[char for char in string.ascii_uppercase])
+
+
     vigwtr = csv.writer(open('vigpairs.csv','w'))
+    vigwtr.writerow(['key'] + [char for char in string.ascii_uppercase])
     
     for snip in snippets:
 
@@ -32,15 +39,16 @@ def process(fileName):
         shift = random.randint(1, 27)
         ciphertext = caesar(snip, shift)
         freq = frequency(ciphertext)
-        caewtr.writerow([shift, freq])
+        caewtr.writerow([shift] + freq)
         
         # make affine pairs
         shift = random.randint(1, 27)
         mults = [1,3,5,7,9,11,15,17,19,21,23,25]
-        mult = random.rantint(0, 13)
+        mult = random.randint(0, 11)
         ciphertext = affine(snip, mults[mult], shift)
         freq = frequency(ciphertext)
-        affwtr.writerow([mult*26+shift, freq])
+
+        affwtr.writerow([mult*26+shift] + freq)
 
         # make vegenere cipher
         length = random.randint(1, 11)
@@ -49,7 +57,7 @@ def process(fileName):
             key.append(random.randint(0, 26))
         ciphertext = vigenere(snip, key)
         freq = frequency(ciphertext)
-        vigwtr.writerow([key, freq])
+        vigwtr.writerow([key] +freq)
 
 
 
