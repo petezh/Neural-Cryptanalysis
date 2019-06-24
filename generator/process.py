@@ -32,14 +32,16 @@ def process(fileName):
         shift = random.randint(1, 27)
         ciphertext = caesar(snip, shift)
         freq = frequency(ciphertext)
-        caewtr.writerow([shift, freq])
+        caewtr.writerow(['shift'] + [char for char in string.ascii_uppercase])
+        caewtr.writerow([shift] + freq)
         
         # make affine pairs
         shift = random.randint(1, 27)
         mult = random.choice([1,3,5,7,9,11,15,17,19,21,23,25])
         ciphertext = affine(snip, mult, shift)
         freq = frequency(ciphertext)
-        affwtr.writerow([shift, mult, freq])
+        affwtr.writerow(['shift','mult']+[char for char in string.ascii_uppercase])
+        affwtr.writerow([shift, mult] + freq)
 
         # make vegenere cipher
         length = random.randint(1, 11)
@@ -48,7 +50,8 @@ def process(fileName):
             key.append(random.randint(0, 26))
         ciphertext = vigenere(snip, key)
         freq = frequency(ciphertext)
-        vigwtr.writerow([key, freq])
+        vigwtr.writerow([key] + [char for char in string.ascii_uppercase])
+        vigwtr.writerow([key] +freq)
 
 
 
