@@ -36,10 +36,11 @@ def process(fileName):
         
         # make affine pairs
         shift = random.randint(1, 27)
-        mult = random.choice([1,3,5,7,9,11,15,17,19,21,23,25])
-        ciphertext = affine(snip, mult, shift)
+        mults = [1,3,5,7,9,11,15,17,19,21,23,25]
+        mult = random.rantint(0, 13)
+        ciphertext = affine(snip, mults[mult], shift)
         freq = frequency(ciphertext)
-        affwtr.writerow([shift, mult, freq])
+        affwtr.writerow([mult*26+shift, freq])
 
         # make vegenere cipher
         length = random.randint(1, 11)
