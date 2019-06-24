@@ -11,20 +11,17 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt #some visuals, dont need in program
 
-def str_to_list(s):
-    return [int(x) for x in s[1:len(s)-1].split(', ')]
-    
-data = pd.read_csv("caepairs.csv")
+data = pd.read_csv("caepairs.csv").values
 labels = []
 datas = []
 #formatting
-for i in range(0,len(data.index)):
-    labels.append((data.loc[i][0]-1)%26)
-    datas.append(str_to_list(data.loc[i][1]))
+for i in range(0,len(data)):
+    labels.append((data[i][0]-1)%26)
+    datas.append(data[i][1:])
 #normalize to [0,1] frequencies
-for i in range(0,len(datas)):
-    for j in range(0,26):
-        datas[i][j] /= sum(datas[i])
+for i in range(0,len(data)):
+    datas[i] = np.true_divide(datas[i], np.sum(datas[i]))
+#create model
 model = keras.Sequential()
 model.add(keras.layers.Dense(26, activation=tf.nn.relu))
 model.add(keras.layers.Dense(26, activation=tf.nn.sigmoid))
