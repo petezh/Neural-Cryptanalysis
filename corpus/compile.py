@@ -9,7 +9,7 @@ import glob
 def main():
     
     # select folders
-    folders = ["abernathy", "berk", "castro", "fletcher", "kauffman", "rubczenski", "eggan", "911report", "govreport"]
+    folders = ["engnews","grammarlab", "abernathy", "berk", "castro", "fletcher", "kauffman", "rubczenski", "eggan", "911report", "govreport"]
     allWords = list()
 
     for folderName in folders:
@@ -20,7 +20,7 @@ def main():
         # extract and compile words from all
         for fileName in textFiles:
             allWords = allWords + extract(fileName)
-
+            
     length = 150
     snip(allWords, length)    
 
@@ -34,17 +34,15 @@ def extract(fileName):
     alltext = ""
     
     for line in file:
-
         # scrub line of anything but letters and spaces
-        line = re.sub("[^a-zA-Z]+", '', line)
-
+        line = re.sub(r'[^a-zA-Z ]+', '', line)
         alltext = alltext + line
-            
+    
     return alltext.split()
 
 
 # make snippets
-def snip(wordList):
+def snip(wordList, length):
 
     # define output file
     file = open('snippets.txt', 'w')
