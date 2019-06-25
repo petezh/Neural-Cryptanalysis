@@ -21,7 +21,7 @@ def main():
         for fileName in textFiles:
             allWords = allWords + extract(fileName)
             
-    length = 150
+    length = 300
     snip(allWords, length)    
 
 
