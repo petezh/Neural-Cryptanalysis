@@ -33,23 +33,23 @@ def process(fileName):
     for snip in snippets:
 
         snip = re.sub("[^a-zA-Z]+", '', snip)
-
+        
         
         # make caesar pairs
-        shift = random.randint(1, 27)
+        shift = random.randint(1, 26)
         ciphertext = caesar(snip, shift)
         freq = frequency(ciphertext)
         caewtr.writerow([shift] + freq)
         
         # make affine pairs
-        shift = random.randint(1, 27)
+        shift = random.randint(1, 26)
         mults = [1,3,5,7,9,11,15,17,19,21,23,25]
         mult = random.randint(0, 11)
         ciphertext = affine(snip, mults[mult], shift)
         freq = frequency(ciphertext)
 
         affwtr.writerow([mult*26+shift] + freq)
-
+        
         # make vegenere cipher
         length = random.randint(1, 11)
         key = list()
