@@ -34,7 +34,7 @@ trial_labels = labels[:15000]
 test_labels = labels[15000:]
 #8523 in caepairs.csv
 #test it, first 6000 5 times through, test around 2500
-model.fit(np.array(trial_data), np.array(trial_labels), epochs=20, batch_size = 32)
+model.fit(np.array(trial_data), np.array(trial_labels), epochs=100, batch_size = 32)
 dfsdf = model.evaluate(np.array(test_data),np.array(test_labels))
 print(dfsdf)
 input()
