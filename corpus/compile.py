@@ -9,7 +9,7 @@ import glob
 def main():
     
     # select folders
-    folders = ["abernathy", "berk", "castro", "fletcher", "kauffman", "rubczenski", "eggan", "911report", "govreport"]
+    folders = ["endnews", "grammarlab", "abernathy", "berk", "castro", "fletcher", "kauffman", "rubczenski", "eggan", "911report", "govreport"]
     allWords = list()
 
     for folderName in folders:
@@ -21,7 +21,7 @@ def main():
         for fileName in textFiles:
             allWords = allWords + extract(fileName)
             
-    length = 20
+    length = 250
     snip(allWords, length)    
 
 
