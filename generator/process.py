@@ -48,7 +48,7 @@ def process(fileName):
         ciphertext = affine(snip, mults[mult], shift)
         freq = frequency(ciphertext)
 
-        affwtr.writerow([mult*26+shift] + freq)
+        affwtr.writerow([shift,mult] + freq)
         
         # make vegenere cipher
         length = random.randint(1, 11)
