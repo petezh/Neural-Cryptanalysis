@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt #some visuals, dont need in program
 
 def main():
 
-    dataPath = "caepairs_len20.csv"
+    dataPath = "caepairs.csv"
     train(dataPath)
 
 def train(dataPath):

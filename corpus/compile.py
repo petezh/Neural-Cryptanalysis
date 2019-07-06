@@ -9,7 +9,8 @@ import glob
 def main():
     
     # select folders
-    folders = ["endnews", "grammarlab", "abernathy", "berk", "castro", "fletcher", "kauffman", "rubczenski", "eggan", "911report", "govreport"]
+    #folders = ["endnews", "grammarlab", "abernathy", "berk", "castro", "fletcher", "kauffman", "rubczenski", "eggan", "911report", "govreport"]
+    folders = ["spanish_corpus"]
     allWords = list()
 
     for folderName in folders:
