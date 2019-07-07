@@ -26,5 +26,6 @@ def train(length, lang):
     test_labels = labels[1500:]
     yield "Training model..."
     model.fit(np.array(trial_data), np.array(trial_labels), epochs=100, batch_size = 32)
+    yield "Training complete. Testing model..."
     results = model.evaluate(np.array(test_data), np.array(test_labels))
-    yield "Training complete. Accuracy: %f" % results[1]
+    yield "Testing complete. Accuracy: %f" % results[1]
