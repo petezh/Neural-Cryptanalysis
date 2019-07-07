@@ -10,14 +10,7 @@ from kivy.uix.button import Button
 from kivy.graphics import Color, Rectangle
 
 
-#import caesar_generator
-def test():
-    yield '1'
-    sleep(1)
-    yield '2'
-    sleep(1)
-    yield '3'
-
+import caesar_generator
 
 class ThisGUI(App):
     def build(self):
@@ -36,8 +29,10 @@ class ThisGUI(App):
 
 class AI(FloatLayout):
     def train():
-        length = int(self.length.split()[0])
-        for msg in test():
+        tb = next( (t for t in ToggleButton.get_widgets('len') if t.state=='down'), None)
+        length = int(tb.text.split()[0]) if tb else None
+        
+        for msg in caesar_generator.train(length, 'eng'):
             setattr(self.status, 'text', msg)
         
     def __init__(self, **kwargs):
