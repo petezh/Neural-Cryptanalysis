@@ -30,7 +30,8 @@ class ThisGUI(App):
 class AI(FloatLayout):
     
     def train(a,b):
-        self.test.text = 'hit2'
+        trainbutton = Button.get_widgets('train')
+        trainbutton.text = 'hit2'
         tb = next( (t for t in ToggleButton.get_widgets('len') if t.state=='down'), None)
         length = int(tb.text.split()[0]) if tb else None
         for msg in caesar_generator.train(length, 'eng'):
@@ -61,7 +62,7 @@ class AI(FloatLayout):
 ##        self.ddbutton.bind(on_release=self.dropdown.open)
 ##        self.dropdown.bind(on_select=lambda instance, x: setattr(self.ddbutton, 'text', x))
 ##        self.add_widget(self.ddbutton)
-        self.trainbutton = Button(text='Train model', size_hint=(.25, .25), pos_hint={'center_x':.75, 'center_y':.75})
+        self.trainbutton = Button(text='Train model', group='train', size_hint=(.25, .25), pos_hint={'center_x':.75, 'center_y':.75})
         self.trainbutton.bind(on_release=self.train)
         self.add_widget(self.trainbutton)
         self.status = Label(text='Status', size_hint=(1, .3), color=(0, 0, 0, 1))
