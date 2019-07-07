@@ -4,12 +4,9 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt #some visuals, dont need in program
 
-def main(length, lang):
-    dataPath = 'caepairs.csv'
-    train(dataPath, length, lang)
-
-def train(dataPath, length, lang):
+def train(length, lang):
     yield "Setting up model..."
+    dataPath = 'caepairs.csv'
     data = pd.read_csv(dataPath).values
     labels = []
     datas = []
