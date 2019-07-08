@@ -47,22 +47,25 @@ def test(data):
         dot.append(np.dot(np.array(frequencies),np.array(shift)))
     return dot.index(max(dot))
 
-data = pd.read_csv("caepairs.csv").values
-labels = []
-datas = []
+def test_all():
+    data = pd.read_csv("caepairs.csv").values
+    labels = []
+    datas = []
 #formatting
-for i in range(0,len(data)):
-    labels.append((data[i][0])%26)
-    datas.append(data[i][1:])
+    for i in range(0,len(data)):
+        labels.append((data[i][0])%26)
+        datas.append(data[i][1:])
 
-#normalize to [0,1] frequencies
+    #normalize to [0,1] frequencies
 
-for i in range(0,len(data)):
-    datas[i] = np.true_divide(datas[i], np.sum(datas[i]))
-x = [test(y) for y in datas]
-print(x[0:20])
-print(labels[0:20])
-count = [(y == z) for y,z in zip(x,labels)]
-count = sum(count)
-print(count/len(data))
-        
+    for i in range(0,len(data)):
+        datas[i] = np.true_divide(datas[i], np.sum(datas[i]))
+    x = [test(y) for y in datas]
+    print(x[0:20])
+    print(labels[0:20])
+    count = [(y == z) for y,z in zip(x,labels)]
+    count = sum(count)
+    print(count/len(data))
+    return count/len(data)
+
+test_all()
