@@ -11,7 +11,8 @@ from kivy.uix.button import Button
 from kivy.graphics import Color, Rectangle
 
 import frequencydot as dot
-#import caesar_generator
+import caesar_generator
+import affine_generator
 
 from time import sleep
 def cgtrain(a,b):
@@ -45,22 +46,23 @@ class AI(FloatLayout):
             return
         self.training = True
 
-# uncomment this when choosing cipher works
-##        ciph_tb = next( (t for t in ToggleButton.get_widgets('ciph') if t.state=='down'), None)
-##        if ciph_tb == None
-##            self.aistatus.text = 'Please select a cipher'
-##            self.training = False
-##            return
-        
-        
+        # get cipher choice
+        ciph_tb = next( (t for t in ToggleButton.get_widgets('ciph') if t.state=='down'), None)
+        if ciph_tb == None:
+            self.aistatus.text = 'Please select a cipher'
+            self.training = False
+            return
+        cipher = ciph_tb.id
+
+        # get length choice    
         len_tb = next( (t for t in ToggleButton.get_widgets('len') if t.state=='down'), None)
         if len_tb == None:
             self.aistatus.text = 'Please select a ciphertext length'
             self.training = False
             return
         length = int(len_tb.id)
+        
 # uncomment this when language works lol
-
 ##        lang_tb = next( (t for t in ToggleButton.get_widgets('lang') if t.state=='down'), None)
 ##        if lang_tb == None:
 ##            self.aistatus.text = 'Please select a language'
@@ -68,10 +70,17 @@ class AI(FloatLayout):
 ##            return
 ##        lang = lang_tb.id
 
-#        for msg in caesar_generator.train(length,'eng'):
+        if cipher == 'caesar':
+            for msg in caesar_generator.train(length, 'eng'):
+                self.aistatus.text = msg + ' for ' + str(length) + ' words'
+        elif cipher == 'affine':
+            for msg in affine_generator.train(length, 'eng'):
+                self.aistatus.text = msg + ' for ' + str(length) + ' words'
 # this line is for evan who cant do anything with tf so he has to simulate the interactivity :(
-        for msg in cgtrain(length, 'eng'):
-            self.aistatus.text = msg + str(length)
+        elif cipher == 'evan':
+            for msg in cgtrain(length, 'eng'):
+                self.aistatus.text = msg + ' for ' + str(length) + 'words'
+
         self.training = False
 
     def dot(self,a):
@@ -101,8 +110,10 @@ class AI(FloatLayout):
 
         self.ciph1 = ToggleButton(text='Caesar cipher', id='caesar', group='ciph', size_hint=(.1,.1), pos_hint={'center_x':.15, 'center_y':.55}, background_normal='', background_color=(.6,.6,.6,1))
         self.ciph2 = ToggleButton(text='Affine cipher', id='affine', group='ciph', size_hint=(.1,.1), pos_hint={'center_x':.15, 'center_y':.45}, background_normal='', background_color=(.6,.6,.6,1))
+        self.ciph3 = ToggleButton(text='Evan\'s test', id='evan', group='ciph', size_hint=(.1,.1), pos_hint={'center_x':.15, 'center_y':.35}, background_normal='', background_color=(.6,.6,.6,1))
         self.add_widget(self.ciph1)
         self.add_widget(self.ciph2)
+        self.add_widget(self.ciph3)
 
         self.len1 = ToggleButton(text='20 words', id='20', group='len', size_hint=(.1,.1), pos_hint={'center_x':.35,'center_y':.7}, background_normal='', background_color=(.6, .6, .6, 1))
         self.len2 = ToggleButton(text='30 words', id='30', group='len', size_hint=(.1,.1), pos_hint={'center_x':.35,'center_y':.6}, background_normal='', background_color=(.6, .6, .6, 1))
