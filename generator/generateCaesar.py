@@ -19,7 +19,7 @@ def process(fileName):
 
     snippets = open(fileName, 'r')
 
-    caewtr = csv.writer(open('caepairs.csv','w'))
+    caewtr = csv.writer(open('caepairs.csv','w'), lineterminator = "\n")
     caewtr.writerow(['shift'] + [char for char in string.ascii_uppercase])
 
     

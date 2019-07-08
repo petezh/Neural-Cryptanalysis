@@ -22,7 +22,7 @@ def main():
         for fileName in textFiles:
             allWords = allWords + extract(fileName)
             
-    length = 250
+    length = 20
     snip(allWords, length)    
 
 

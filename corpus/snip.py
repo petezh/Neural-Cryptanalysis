@@ -5,14 +5,14 @@ def main():
     words = open('alltext.txt', 'r')
     allWords = eval(next(words))
 
-    snip(allWords, 500)
+    snip(allWords, 5)
 
 
 # make snips
 def snip(wordList, length):
 
     # define output file
-    file = open('snippets.txt', 'w')
+    file = open('snippets20.txt', 'w')
 
     snippet = ""
     counter = 0
