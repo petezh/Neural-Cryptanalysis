@@ -1,3 +1,9 @@
+"""
+a port of caesar.py that allows for interfacing with the GUI
+
+@author: evan
+"""
+
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np

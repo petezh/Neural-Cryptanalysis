@@ -49,5 +49,6 @@ def test_all():
     print(count/len(data))
     return count/len(data)
 
-test_all()
+if __name__ == '__main__':
+    test_all()
 
