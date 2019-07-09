@@ -22,12 +22,8 @@ def main():
     generate(2, "span")
 
 def generate(length, lang):
-
-
-
     
     wordList = eval(next(open(lang + "_alltext.txt", 'r')))
-    
     
     # define output file
     snipOut = open(lang + "snip" + str(length) + '.txt', 'w')
@@ -53,19 +49,16 @@ def generate(length, lang):
     print("Cut "+str(nosnips) + " snips.")
     
     snipOut.close()
-    
 
+def caesar_encrypt(length, lang):
     snippets = open(lang + "snip" + str(length) + '.txt', 'r')
     caefile = open(lang + '_' + str(length) + 'cea.csv','w')
     caewtr = csv.writer(caefile, lineterminator = "\n")
     caewtr.writerow(['shift'] + [char for char in string.ascii_uppercase])
 
-
-    
     for snip in snippets:
 
         snip = re.sub("[^a-zA-Z]+", '', snip)
-        
         
         # make caesar pairs
         shift = random.randint(1, 26)
@@ -76,22 +69,18 @@ def generate(length, lang):
     print("Generated caesar ciphertexts.")
 
 
-
-
 def caesar(text, shift):
     alphabet = string.ascii_uppercase
     shifted_alphabet = alphabet[shift:] + alphabet[:shift]
     table = str.maketrans(alphabet, shifted_alphabet)
     return text.translate(table)
 
-def frequency(text):
 
+def frequency(text):
     alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     freq = list()
-    
     for i in range(26):
         freq.append(text.count(alpha[i]))
-
     return freq
 
 if __name__ == "__main__":

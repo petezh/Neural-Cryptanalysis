@@ -26,7 +26,7 @@ def main():
 
 def train(length, lang):
 
-    print("Starting training...")
+    yield "Setting up model..."
     
     data = pd.read_csv(lang + '_' + str(length) + 'cea.csv').values
     labels = []
@@ -51,9 +51,12 @@ def train(length, lang):
     test_labels = labels[50000:]
     #8523 in caepairs.csv
     #test it, first 6000 5 times through, test around 2500
+    yield 'Training model...'
     model.fit(np.array(trial_data), np.array(trial_labels), epochs=10, batch_size = 32)
-    dfsdf = model.evaluate(np.array(test_data),np.array(test_labels))
-    neuralAcc = dfsdf[1]
+    yield 'Training complete. Testing model...'
+    results = model.evaluate(np.array(test_data),np.array(test_labels))
+    neuralAcc = results[1]
+    yield 'Testing complete. Accuracy: %f' % neuralAcc
     
 
 
@@ -74,7 +77,7 @@ def train(length, lang):
     for x in let:
         frequencies.append(round(letterfreq[x]/100,4))
 
-    dotAcc = test_all(lang + '_' + str(length) + 'cea.csv')
+    dotAcc = test_all(length, lang)
 
     fd = csv.writer(open('results.csv','a'), lineterminator = "\n")
     fd.writerow([lang, length, neuralAcc, dotAcc])
@@ -88,7 +91,8 @@ def test(data):
         dot.append(np.dot(np.array(frequencies),np.array(shift)))
     return dot.index(max(dot))
 
-def test_all(path):
+def test_all(length, lang):
+    path = lang + '_' + str(length) + 'cea.csv'
     data = pd.read_csv(path).values
     labels = []
     datas = []
