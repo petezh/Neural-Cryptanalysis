@@ -74,7 +74,7 @@ class AI(FloatLayout):
             return
         lang = lang_tb.id
 
-        if ciph == 'evan':
+        if cipher == 'evan':
             self.aistatus.text = 'It works'
 
         import generator
