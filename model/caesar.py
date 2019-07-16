@@ -17,7 +17,7 @@ def main():
     train(dataPath)
 
 def train(dataPath):
-
+    percent = 0.8
     data = pd.read_csv(dataPath).values
     labels = []
     datas = []
@@ -34,11 +34,12 @@ def train(dataPath):
     model.compile(optimizer='adam',
                   loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
-    trial_data = datas[:50000]
-    test_data = datas[50000:]
+    numTest = round(len(datas)*percent)
+    trial_data = datas[:numTest]
+    test_data = datas[numTest:]
 
-    trial_labels = labels[:50000]
-    test_labels = labels[50000:]
+    trial_labels = labels[:numTest]
+    test_labels = labels[numTest:]
     #8523 in caepairs.csv
     #test it, first 6000 5 times through, test around 2500
     model.fit(np.array(trial_data), np.array(trial_labels), epochs=10, batch_size = 32)
