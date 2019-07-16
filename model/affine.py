@@ -18,6 +18,9 @@ labels = []
 datas = []
 a = [1,3,5,7,9,11,15,17,19,21,23,25]
 
+#what portion of the data to use as training
+percent = 0.8
+
 #formatting
 for i in range(0,len(data)):
     if (data[i][1]%26) in a:
@@ -33,11 +36,12 @@ model.add(keras.layers.Dense(312, activation=tf.nn.sigmoid))
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
-trial_data = datas[:4000]
-test_data = datas[4000:]
+numTest = round(len(datas)*percent)
+trial_data = datas[:numTest]
+test_data = datas[numTest:]
 
-trial_labels = labels[:4000]
-test_labels = labels[4000:]
+trial_labels = labels[:numTest]
+test_labels = labels[numTest:]
 #8523 in caepairs.csv
 #test it, first 6000 5 times through, test around 2500
 model.fit(np.array(trial_data), np.array(trial_labels), epochs=150, batch_size = 32)

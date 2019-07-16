@@ -16,6 +16,7 @@ def train(length, lang):
     data = pd.read_csv(dataPath).values
     labels = []
     datas = []
+    percent = 0.8
     for i in range(0, len(data)):
         labels.append((data[i][0]-1)%26)
         datas.append(data[i][1:])
@@ -26,10 +27,12 @@ def train(length, lang):
     model.compile(optimizer='adam',
                   loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
-    trial_data = datas[:1500]
-    test_data = datas[1500:]
-    trial_labels = labels[:1500]
-    test_labels = labels[1500:]
+    numTest = round(len(datas)*percent)
+    trial_data = datas[:numTest]
+    test_data = datas[numTest:]
+
+    trial_labels = labels[:numTest]
+    test_labels = labels[numTest:]
     yield "Training model..."
     model.fit(np.array(trial_data), np.array(trial_labels), epochs=100, batch_size = 32)
     yield "Training complete. Testing model..."

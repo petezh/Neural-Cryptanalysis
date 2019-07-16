@@ -17,7 +17,9 @@ def train(length, lang):
     labels = []
     datas = []
     a = [1,3,5,7,9,11,15,17,19,21,23,25]
-
+    
+    percentage = 0.8
+    
     #formatting
     for i in range(0, len(data)):
         if (data[i][1] % 26) in a:
@@ -33,11 +35,12 @@ def train(length, lang):
     model.compile(optimizer='adam',
                   loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
-    trial_data = datas[:4000]
-    test_data = datas[4000:]
+    numTest = round(len(datas)*percentage)
+    trial_data = datas[:numTest]
+    test_data = datas[numTest:]
 
-    trial_labels = labels[:4000]
-    test_labels = labels[4000:]
+    trial_labels = labels[:numTest]
+    test_labels = labels[numTest:]
 
     yield "Training model..."
     model.fit(np.array(trial_data), np.array(trial_labels), epochs=150, batch_size = 32)
