@@ -36,7 +36,7 @@ model.add(keras.layers.Dense(312, activation=tf.nn.sigmoid))
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
-numTest = round(len(datas)*0.8)
+numTest = round(len(datas)*percent)
 trial_data = datas[:numTest]
 test_data = datas[numTest:]
 
