@@ -9,6 +9,8 @@ import random
 import string
 import multiprocessing
 import itertools
+import numpy as np
+from math import ceil
 
 def main():
     fileName = "snippets.txt"
@@ -29,6 +31,9 @@ def process(fileName):
 
     vigwtr = csv.writer(open('vigpairs.csv','w'))
     vigwtr.writerow(['key'] + [char for char in string.ascii_uppercase])
+    
+    hillwtr = csv.writer(open('hillpairs2x2.csv','w'))
+    hillwtr.writerow(['0,0','0,1','1,0','1,1'] + [char for char in string.ascii_uppercase])
     
     for snip in snippets:
 
@@ -58,8 +63,12 @@ def process(fileName):
         ciphertext = vigenere(snip, key)
         freq = frequency(ciphertext)
         vigwtr.writerow([key] +freq)
-
-
+        
+        #make hill cipher 2x2
+        ciphertext = hill(snip,2)
+        freq = frequency(ciphertext[0])
+        key = ciphertext[1]
+        hillwtr.writerow(key.flatten().tolist() + freq)
 
 
 # perform a caesar cipher
@@ -92,6 +101,36 @@ def vigenere(text, key):
         
     return ciphertext
 
+#generate keys for hill cipher
+def gen_key(dimension):
+    inv = False
+    while not inv:
+        key = np.random.randint(size=(dimension, dimension), low=0, high=25)
+        try:
+            i = np.linalg.inv(key)
+            inv = True
+        except:
+            inv = False
+    return key
+
+#performs a classic hill cipher
+def hill(plaintext, dimension, key=None):
+    plaintext = plaintext.upper()
+    if key == None or key.shape != (dimension, dimension):
+        key = gen_key(dimension)
+        idx = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    while len(plaintext) % dimension != 0:
+        plaintext += 'A'
+    plain_arr = np.array([idx.index(let) for let in plaintext])
+    plain_arr = np.reshape(plain_arr, (ceil(len(plaintext)/dimension), dimension))
+    ciph_arr = []
+    for sub in plain_arr:
+        ciph_arr.append(np.remainder(np.matmul(sub, key),26))
+    ciphertext = ''
+    for sub in ciph_arr:
+        for let in sub:
+            ciphertext += idx[let]
+    return ciphertext,key
 # perform frequency analysis
 def frequency(text):
 
