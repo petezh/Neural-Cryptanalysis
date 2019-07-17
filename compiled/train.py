@@ -9,7 +9,6 @@ import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt #some visuals, dont need in program
 
 import re
 import csv
@@ -105,7 +104,7 @@ def test_all(length, lang):
 
     for i in range(0,5000):
         datas[i] = np.true_divide(datas[i], np.sum(datas[i]))
-    x = [test(y, freqencies) for y in datas]
+    x = [test(y, frequencies) for y in datas]
     count = [(y == z) for y,z in zip(x,labels)]
     count = sum(count)
     print(count/5000)

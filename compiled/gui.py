@@ -9,6 +9,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.button import Button
 from kivy.graphics import Color, Rectangle
+from kivy.properties import StringProperty
 
 #import generator
 #import caesar_generator
@@ -41,6 +42,7 @@ class ThisGUI(App):
 
 class AI(FloatLayout):
     def train(self,a):
+        self.aistatus.text = "test"
         # don't start training again with one currently active
         if self.training:
             return
@@ -52,7 +54,7 @@ class AI(FloatLayout):
             self.aistatus.text = 'Please select a cipher'
             self.training = False
             return
-        cipher = ciph_tb.id
+        ciph = ciph_tb.id
 
 ##        if cipher == 'affine':
 ##            self.aistatus.text = 'Affine not yet implemented with the GUI.'
@@ -74,7 +76,7 @@ class AI(FloatLayout):
             return
         lang = lang_tb.id
 
-        if cipher == 'evan':
+        if ciph == 'evan':
             self.aistatus.text = 'It works'
 
         import generator
@@ -87,7 +89,7 @@ class AI(FloatLayout):
         self.aistatus.text = 'Snippets created. Encrypting snippets for testing...'
         generator.encrypt(length, lang, ciph)
         self.aistatus.text = 'Encryption complete. Advancing to neural network.'
-        for msg in train.train(length, lang):
+        for msg in train.caesar_train(length, lang):
             self.aistatus.text = msg
         self.training = False
 
