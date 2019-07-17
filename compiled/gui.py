@@ -54,10 +54,10 @@ class AI(FloatLayout):
             return
         cipher = ciph_tb.id
 
-        if cipher == 'affine':
-            self.aistatus.text = 'Affine not yet implemented with the GUI.'
-            self.training = False
-            return
+##        if cipher == 'affine':
+##            self.aistatus.text = 'Affine not yet implemented with the GUI.'
+##            self.training = False
+##            return
 
         # get length choice    
         len_tb = next( (t for t in ToggleButton.get_widgets('len') if t.state=='down'), None)
@@ -85,7 +85,7 @@ class AI(FloatLayout):
         self.aistatus.text = 'Creating snippets in ' + languages[lang] + '...'
         generator.generate(length, lang)
         self.aistatus.text = 'Snippets created. Encrypting snippets for testing...'
-        generator.caesar_encrypt(length, lang)
+        generator.encrypt(length, lang, ciph)
         self.aistatus.text = 'Encryption complete. Advancing to neural network.'
         for msg in train.train(length, lang):
             self.aistatus.text = msg
@@ -97,15 +97,17 @@ class AI(FloatLayout):
         self.dotting = True
 
         ciph_tb = next( (t for t in ToggleButton.get_widgets('ciph') if t.state=='down'), None)
-        if ciph_tb.id != 'caesar':
-            self.dotlabel.text = 'Frequency analysis currently only available for caesar cipher.'
+        if ciph_tb == None:
+            self.dotlabel.text = 'Please select a cipher'
             self.dotting = False
             return
+
         len_tb = next( (t for t in ToggleButton.get_widgets('len') if t.state=='down'), None)
         if len_tb == None:
             self.dotlabel.text = 'Please select a ciphertext length'
             self.dotting = False
             return
+
         length = int(len_tb.id)
         lang_tb = next( (t for t in ToggleButton.get_widgets('lang') if t.state=='down'), None)
         if lang_tb == None:
@@ -113,6 +115,11 @@ class AI(FloatLayout):
             self.dotting = False
             return
         lang = lang_tb.id
+
+        if ciph_tb.id != 'caesar':
+            self.dotlabel.text = 'Frequency analysis currently only available for caesar cipher.'
+            self.dotting = False
+            return
         
         import train
         results = train.test_all(length, lang)

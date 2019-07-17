@@ -50,6 +50,14 @@ def generate(length, lang):
     
     snipOut.close()
 
+    return "Cut "+str(nosnips) + " snips."
+
+def encrypt(length, lang, enc):
+
+    enc_dict = {'caesar':caesar_encrypt, 'affine':affine_encrypt, 'hill':hill_encrypt}
+
+    return enc_dict[enc](length, lang)
+
 def caesar_encrypt(length, lang):
     snippets = open(lang + "snip" + str(length) + '.txt', 'r')
     caefile = open(lang + '_' + str(length) + 'cea.csv','w')
@@ -67,7 +75,7 @@ def caesar_encrypt(length, lang):
         caewtr.writerow([shift] + freq)
     caefile.close()
     print("Generated caesar ciphertexts.")
-
+    return "Generated caesar ciphertexts."
 
 def caesar(text, shift):
     alphabet = string.ascii_uppercase
@@ -75,6 +83,42 @@ def caesar(text, shift):
     table = str.maketrans(alphabet, shifted_alphabet)
     return text.translate(table)
 
+def affine_encrypt(length, lang):
+    snippets = open(lang + "snip" + str(length) + '.txt', 'r')
+    affFile = open('affpairs.csv','w')
+    affwtr = csv.writer(affFile)
+    affwtr.writerow(['shift','mult']+[char for char in string.ascii_uppercase])
+
+    for snip in snippets:
+
+        snip = re.sub("[^a-zA-Z]+", '', snip)
+        
+        
+        # make affine pairs
+        shift = random.randint(1, 26)
+        mults = [1,3,5,7,9,11,15,17,19,21,23,25]
+        mult = random.randint(0, 11)
+        ciphertext = affine(snip, mults[mult], shift)
+        freq = frequency(ciphertext)
+
+        affwtr.writerow([shift, mult] + freq)
+        
+    affFile.close()
+    print("Generated affine ciphertexts.")
+    return "Generated affine ciphertexts."
+
+def affine(text, mult, shift):
+    alphabet = string.ascii_uppercase
+    ciphertext = ""
+    for char in text:
+        index = ((mult * alphabet.index(char))+shift)%26
+        ciphertext = ciphertext+alphabet[index]
+        
+    return ciphertext
+
+def hill_encrypt(length, lang):
+    #TODO
+    pass
 
 def frequency(text):
     alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

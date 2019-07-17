@@ -82,10 +82,11 @@ def train(length, lang):
     for x in let:
         frequencies.append(round(letterfreq[x]/100,4))
 
-    dotAcc = test_all(length, lang)
-
-    fd = csv.writer(open('results.csv','a'), lineterminator = "\n")
-    fd.writerow([lang, length, neuralAcc, dotAcc])
+    if __name__ == '__main__':
+        dotAcc = test_all(length, lang)
+    
+        fd = csv.writer(open('results.csv','a'), lineterminator = "\n")
+        fd.writerow([lang, length, neuralAcc, dotAcc])
 
 ## DOT PRODUCT TESTING
 
