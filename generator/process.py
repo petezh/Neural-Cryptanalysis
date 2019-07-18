@@ -105,7 +105,7 @@ def vigenere(text, key):
 def gen_key(dimension):
     inv = False
     while not inv:
-        key = np.random.randint(size=(dimension, dimension), low=0, high=25)
+        key = np.random.randint(size=(dimension, dimension), low=0, high=26)
         try:
             i = np.linalg.inv(key)
             inv = True
