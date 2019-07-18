@@ -53,7 +53,7 @@ def generate(length, lang):
 
 def encrypt(length, lang, enc):
 
-    enc_dict = {'caesar':caesar_encrypt, 'affine':affine_encrypt, 'hill':hill_encrypt}
+    enc_dict = {'caesar':caesar_encrypt, 'affine':affine_encrypt, 'hill':hill_encrypt, 'vigenere':vig_encrypt}
 
     return enc_dict[enc](length, lang)
 
