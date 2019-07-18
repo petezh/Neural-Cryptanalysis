@@ -25,7 +25,7 @@ def generate(length, lang):
     wordList = eval(next(open(lang + "_alltext.txt", 'r')))
     
     # define output file
-    snipOut = open(lang + "snip" + str(length) + '.txt', 'w')
+    snipOut = open(lang + "snip" + str(length) + '_' + '.txt', 'w')
 
     snippet = ""
     counter = 0
@@ -59,7 +59,7 @@ def encrypt(length, lang, enc):
 
 def caesar_encrypt(length, lang):
     snippets = open(lang + "snip" + str(length) + '.txt', 'r')
-    caefile = open(lang + '_' + str(length) + 'cea.csv','w')
+    caefile = open(lang + '_' + str(length) + '_' + 'cae.csv','w')
     caewtr = csv.writer(caefile, lineterminator = "\n")
     caewtr.writerow(['shift'] + [char for char in string.ascii_uppercase])
 
@@ -84,7 +84,7 @@ def caesar(text, shift):
 
 def affine_encrypt(length, lang):
     snippets = open(lang + "snip" + str(length) + '.txt', 'r')
-    affFile = open('affpairs.csv','w')
+    affFile = open(lang + '_' + str(length) + '_' + 'aff.csv','w')
     affwtr = csv.writer(affFile)
     affwtr.writerow(['shift','mult']+[char for char in string.ascii_uppercase])
 
@@ -124,8 +124,8 @@ def hill_encrypt(length, lang):
 def vig_encrypt(length, lang):
     
     snippets = open(lang + "snip" + str(length) + '.txt', 'r')
-    vigFile = open('vigpairs.csv','w')
-    vigwtr = csv.writer(affFile)
+    vigFile = open(lang + '_' + str(length) + '_' + 'vig.csv','w')
+    vigwtr = csv.writer(vigFile)
     vigwtr.writerow(['len']+[char for char in string.ascii_uppercase])
 
     for snip in snippets:

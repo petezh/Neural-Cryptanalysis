@@ -27,7 +27,7 @@ def caesar_train(length, lang):
 
     yield "Setting up model..."
     
-    data = pd.read_csv(lang + '_' + str(length) + 'cea.csv').values
+    data = pd.read_csv(lang + '_' + str(length) + '_' + 'cae.csv').values
     labels = []
     datas = []
     #formatting
@@ -75,7 +75,7 @@ def test(data, freq):
     return dot.index(max(dot))
 
 def test_all(length, lang):
-    path = lang + '_' + str(length) + 'cea.csv'
+    path = lang + '_' + str(length) + '_' + 'cae.csv'
     data = pd.read_csv(path).values
 
     if lang == "eng":
