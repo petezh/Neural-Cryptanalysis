@@ -10,19 +10,18 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.button import Button
 from kivy.graphics import Color, Rectangle
 from kivy.properties import StringProperty
+import threading
+import os.path
 
-#import generator
-#import caesar_generator
-#import affine_generator
 
 from time import sleep
-def cgtrain(a,b):
+def cgtrain():
     yield "1"
-    #sleep(3)
+    sleep(1)
     yield "2"
-    #sleep(3)
+    sleep(1)
     yield "3"
-    #sleep(3)
+    sleep(1)
     yield "4"
 
 class ThisGUI(App):
@@ -41,8 +40,13 @@ class ThisGUI(App):
 
 
 class AI(FloatLayout):
-    def train(self,a):
-        self.aistatus.text = "test"
+
+    def file_checker(self, ciph, length, lang):
+        return os.path.exists(lang + '_' + str(length) + '_' + ciph[0:3] + '.csv')
+
+    def train_helper(self, not_used):
+        threading.Thread(target=self.train).start()
+    def train(self):
         # don't start training again with one currently active
         if self.training:
             return
@@ -76,9 +80,20 @@ class AI(FloatLayout):
             return
         lang = lang_tb.id
 
-        if ciph == 'evan':
-            self.aistatus.text = 'It works'
+        self.aistatus.text = 'Checking necessary files...'
+        files = self.file_checker(ciph, length, lang)
+        if files:
+            self.aistatus.text = 'Files exist. Moving directly to training...'
+        else:
+            self.aistatus.text = 'Files do not exist. Generating necessary files...'
+        sleep(1)
 
+        if ciph == 'evan':
+            for msg in cgtrain():
+                self.aistatus.text = msg
+            self.training = False
+            return
+        
         import generator
         import train
         
@@ -93,7 +108,10 @@ class AI(FloatLayout):
             self.aistatus.text = msg
         self.training = False
 
-    def dot(self, not_used):
+    def dot_helper(self, not_used):
+        threading.Thread(target=self.dot).start()
+
+    def dot(self):
         if self.dotting:
             return
         self.dotting = True
@@ -163,7 +181,7 @@ class AI(FloatLayout):
         self.add_widget(self.lang3)
         
         self.trainbutton = Button(text='Train model', size_hint=(.25, .15), pos_hint={'center_x':.75, 'center_y':.725})
-        self.trainbutton.bind(on_release=self.train)
+        self.trainbutton.bind(on_release=self.train_helper)
         self.add_widget(self.trainbutton)
         self.aistatus = Label(text='Model status', size_hint=(.25, .15), pos_hint={'center_x':.75, 'center_y':.575}, color=(0, 0, 0, 1))
         self.add_widget(self.aistatus)
