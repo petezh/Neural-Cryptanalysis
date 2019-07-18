@@ -119,6 +119,48 @@ def hill_encrypt(length, lang):
     #TODO
     pass
 
+
+
+def vig_encrypt(length, lang):
+    
+    snippets = open(lang + "snip" + str(length) + '.txt', 'r')
+    vigFile = open('vigpairs.csv','w')
+    vigwtr = csv.writer(affFile)
+    vigwtr.writerow(['len']+[char for char in string.ascii_uppercase])
+
+    for snip in snippets:
+
+        snip = re.sub("[^a-zA-Z]+", '', snip)
+        
+        
+        # make affine pairs
+        leng = random.randint(1, 11)
+        key = ""
+        for i in range(0, leng):
+            key += random.choice(string.ascii_letters)
+        ciphertext = vigenere(snip, key)
+        freq = frequency(ciphertext)
+
+        vigwtr.writerow([leng] + freq)
+        
+    vigFile.close()
+    print("Generated vigenere ciphertexts.")
+    return "Generated vigenere ciphertexts."
+
+
+# peform a classic vigenere cipher
+def vigenere(text, key):
+
+    alphabet = string.ascii_uppercase
+    ciphertext = ""
+    for i in range(len(text)):
+        index = (alphabet.index(text[i]) + key[i % len(key)])%26
+        ciphertext = ciphertext + alphabet[index]
+        
+    return ciphertext
+
+
+                                                                                                                                                                               
 def frequency(text):
     alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     freq = list()
