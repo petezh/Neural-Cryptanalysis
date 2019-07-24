@@ -104,7 +104,7 @@ class AI(FloatLayout):
         self.aistatus.text = 'Snippets created. Encrypting snippets for testing...'
         generator.encrypt(length, lang, ciph)
         self.aistatus.text = 'Encryption complete. Advancing to neural network.'
-        for msg in train.caesar_train(length, lang):
+        for msg in train.train(length, lang, ciph):
             self.aistatus.text = msg
         self.training = False
 
