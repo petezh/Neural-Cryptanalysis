@@ -23,6 +23,12 @@ def main():
 
     caesar_train(2, "span")
 
+def train(length, lang, ciph):
+    dic = {'caesar':caesar_train, 'affine': affine_train, 'evan': pass}
+    for msg in dic[ciph](length, lang):
+        yield msg
+        
+
 def caesar_train(length, lang):
 
     yield "Setting up model..."
@@ -63,7 +69,54 @@ def caesar_train(length, lang):
 
         fd = csv.writer(open('results.csv','a'), lineterminator = "\n")
         fd.writerow([lang, length, neuralAcc, dotAcc])
+
+
         
+def affine_train(length, lang):
+
+    yield "Setting up model..."
+    
+    data = pd.read_csv(lang + '_' + str(length) + '_aff.csv').values
+    labels = []
+    datas = []
+    #formatting
+    a = [1,3,5,7,9,11,15,17,19,21,23,25]
+
+#formatting
+    for i in range(0,len(data)):
+        if (data[i][1]%26) in a:
+            labels.append(int(((data[i][0]-1)%26)*12+a.index(data[i][1]%26)))
+            datas.append(data[i][2:])
+    #normalize to [0,1] frequencies
+    for i in range(0,len(datas)):
+        datas[i] = np.true_divide(datas[i], np.sum(datas[i]))
+    model = keras.Sequential()
+    model.add(keras.layers.Dense(12, activation=tf.nn.relu))
+    model.add(keras.layers.Dense(26, activation=tf.nn.relu))
+    model.add(keras.layers.Dense(312, activation=tf.nn.sigmoid))
+    model.compile(optimizer='adam',
+                  loss='sparse_categorical_crossentropy',
+                  metrics=['accuracy'])
+    trial_data = datas[:50000]
+    test_data = datas[50000:]
+
+    trial_labels = labels[:50000]
+    test_labels = labels[50000:]
+        #8523 in caepairs.csv
+    #test it, first 6000 5 times through, test around 2500
+    yield 'Training model...'
+    model.fit(np.array(trial_data), np.array(trial_labels), epochs=10, batch_size = 32)
+    yield 'Training complete. Testing model...'
+    results = model.evaluate(np.array(test_data),np.array(test_labels))
+    neuralAcc = results[1]
+    yield 'Testing complete. Accuracy: %f' % neuralAcc
+
+    if __name__ == '__main__':
+        dotAcc = test_all(length, lang)
+
+        fd = csv.writer(open('results.csv','a'), lineterminator = "\n")
+        fd.writerow([lang, length, neuralAcc, dotAcc])
+
 
 ## DOT PRODUCT TESTING
 
