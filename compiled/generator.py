@@ -84,7 +84,7 @@ def caesar(text, shift):
 
 def affine_encrypt(length, lang):
     snippets = open(lang + "snip" + str(length) + '.txt', 'r')
-    affFile = open(lang + '_' + str(length) + '_' + 'aff.csv','w')
+    affFile = open(lang + '_' + str(length) + 'aff.csv','w')
     affwtr = csv.writer(affFile)
     affwtr.writerow(['shift','mult']+[char for char in string.ascii_uppercase])
 
@@ -124,7 +124,7 @@ def hill_encrypt(length, lang):
 def vig_encrypt(length, lang):
     
     snippets = open(lang + "snip" + str(length) + '.txt', 'r')
-    vigFile = open(lang + '_' + str(length) + '_' + 'vig.csv','w')
+    vigFile = open(lang + '_' + str(length) + '_vig.csv','w')
     vigwtr = csv.writer(vigFile)
     vigwtr.writerow(['len']+[char for char in string.ascii_uppercase])
 
