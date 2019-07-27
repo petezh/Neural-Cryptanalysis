@@ -28,7 +28,7 @@ def train(length, lang):
 
     yield "Setting up model..."
     
-    data = pd.read_csv(lang + '_' + str(length) + 'aff.csv').values
+    data = pd.read_csv(lang + '_' + str(length) + '_aff.csv').values
     labels = []
     datas = []
     #formatting

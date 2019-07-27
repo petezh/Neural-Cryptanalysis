@@ -23,8 +23,11 @@ def main():
 
     caesar_train(2, "span")
 
+def e():
+    pass
+
 def train(length, lang, ciph):
-    dic = {'caesar':caesar_train, 'affine': affine_train, 'evan': pass}
+    dic = {'caesar':caesar_train, 'affine': affine_train, 'evan': e}
     for msg in dic[ciph](length, lang):
         yield msg
         

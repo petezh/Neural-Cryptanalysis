@@ -25,7 +25,7 @@ def generate(length, lang):
     wordList = eval(next(open(lang + "_alltext.txt", 'r')))
     
     # define output file
-    snipOut = open(lang + "snip" + str(length) + '_' + '.txt', 'w')
+    snipOut = open(lang + "snip" + str(length) + '.txt', 'w')
 
     snippet = ""
     counter = 0

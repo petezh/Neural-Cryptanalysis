@@ -186,7 +186,7 @@ class AI(FloatLayout):
         self.aistatus = Label(text='Model status', size_hint=(.25, .15), pos_hint={'center_x':.75, 'center_y':.575}, color=(0, 0, 0, 1))
         self.add_widget(self.aistatus)
         self.dotbutton = Button(text='Frequency analysis', size_hint=(.25, .15), pos_hint={'center_x':.75, 'center_y':.425})
-        self.dotbutton.bind(on_release=self.dot)
+        self.dotbutton.bind(on_release=self.dot_helper)
         self.add_widget(self.dotbutton)
         self.dotlabel = Label(text='Frequency analysis results', size_hint=(.25, .15), pos_hint={'center_x':.75, 'center_y':.275}, color=(0,0,0,1))
         self.add_widget(self.dotlabel)
