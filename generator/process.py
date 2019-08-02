@@ -18,7 +18,7 @@ def main():
 
 # calls ciphers, writes to output
 def process(fileName):
-
+    
     snippets = open(fileName, 'r')
 
     caewtr = csv.writer(open('caepairs.csv','w'))
@@ -32,8 +32,9 @@ def process(fileName):
     vigwtr = csv.writer(open('vigpairs.csv','w'))
     vigwtr.writerow(['key'] + [char for char in string.ascii_uppercase])
     
-    hillwtr = csv.writer(open('hillpairs2x2.csv','w'))
-    hillwtr.writerow(['0,0','0,1','1,0','1,1'] + [char for char in string.ascii_uppercase])
+    n = int(input('enter hill size'))
+    hillwtr = csv.writer(open('hillpairsnxn.csv','w'))
+    hillwtr.writerow([str(x) for x in list(range(n*n))] + [char for char in string.ascii_uppercase])
     
     for snip in snippets:
 
@@ -64,8 +65,8 @@ def process(fileName):
         freq = frequency(ciphertext)
         vigwtr.writerow([key] +freq)
         
-        #make hill cipher 2x2
-        ciphertext = hill(snip,2)
+        #make hill cipher nxn
+        ciphertext = hill(snip,n)
         freq = frequency(ciphertext[0])
         key = ciphertext[1]
         hillwtr.writerow(key.flatten().tolist() + freq)
